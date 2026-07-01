@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+    --primary: 8 69% 62%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 14% 95%;
+    --secondary-foreground: 0 0% 35%;
+    --muted: 210 14% 95%;
+    --muted-foreground: 0 0% 45%;
+    --accent: 153 36% 45%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 210 14% 89%;
+    --input: 210 14% 89%;
+    --ring: 8 69% 62%;
+    --radius: 1rem;
+  }
+  
+  * {
+    @apply border-slate-200;
+  }
+  body {
+    @apply bg-slate-50;
+  }
+  h1, h2, h3 {
+    @apply font-serif;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-coral to-emerald bg-clip-text text-transparent;
+  }
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-glass;
+  }
+  .card-shadow {
+    @apply shadow-premium hover:shadow-premium-lg transition-shadow duration-500;
+  }
+  .image-shine {
+    @apply relative overflow-hidden;
+  }
+  .image-shine::after {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 transition-opacity duration-300;
+  }
+  .image-shine:hover::after {
+    @apply opacity-100;
+  }
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .transform-style-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .rotateY-180 {
+    transform: rotateY(180deg);
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Premium Dog Animation - Custom CSS overrides */
+.animate-shimmer-text {
+  background: linear-gradient(90deg, #D4A843 0%, #fff 50%, #D4A843 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer-text 3s linear infinite;
+}
+
+@keyframes shimmer-text {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+/* SVG transform-origin overrides */
+.animate-tail-wag {
+  transform-origin: 250px 220px;
+}
+
+.animate-head-tilt {
+  transform-origin: 200px 220px;
+}
+
+.animate-blink {
+  transform-origin: center;
+}
+
+.animate-ear-wiggle-left {
+  transform-origin: top left;
+}
+
+.animate-ear-wiggle-right {
+  transform-origin: top right;
+}
+
+.animate-badge-pop {
+  opacity: 0;
+}
+
