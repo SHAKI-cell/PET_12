@@ -9,6 +9,12 @@ import { PetGrid } from "@/components/pets/PetGrid";
 import { MapViewPlaceholder } from "@/components/pets/MapViewPlaceholder";
 import { SwipeDiscovery } from "@/components/pets/SwipeDiscovery";
 import { Input } from "@/components/ui/Input";
+import dynamic from "next/dynamic";
+
+const PetMap = dynamic(() => import("@/components/pets/PetMap").then((mod) => mod.PetMap), {
+  ssr: false,
+  loading: () => <MapViewPlaceholder pets={[]} />
+});
 
 export default function PetsPage() {
   const [pets, setPets] = useState<Pet[]>([]);
@@ -107,7 +113,7 @@ export default function PetsPage() {
             )}
 
             {viewMode === "map" && !loading && (
-              <MapViewPlaceholder pets={pets} />
+              <PetMap pets={pets} />
             )}
 
             {viewMode === "swipe" && !loading && (

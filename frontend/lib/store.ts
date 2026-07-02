@@ -154,20 +154,25 @@ export const useListingDraftStore = create<ListingDraftState>()(
   )
 );
 
-// --- Auth Store (NOT persisted) ---
+// --- Auth Store (persisted) ---
 interface AuthState {
-  user: { id: string; name: string; email: string; role: "adopter" | "lister" } | null;
+  user: { id: string; name: string; email: string; avatar: string; role: "adopter" | "lister" } | null;
   isAuthenticated: boolean;
   login: (user: AuthState["user"]) => void;
   logout: () => void;
 }
 
-export const useAuthStore = create<AuthState>()((set) => ({
-  user: null,
-  isAuthenticated: false,
-  login: (user) => set({ user, isAuthenticated: true }),
-  logout: () => set({ user: null, isAuthenticated: false }),
-}));
+export const useAuthStore = create<AuthState>()(
+  persist(
+    (set) => ({
+      user: null,
+      isAuthenticated: false,
+      login: (user) => set({ user, isAuthenticated: true }),
+      logout: () => set({ user: null, isAuthenticated: false }),
+    }),
+    { name: "dofo-auth" }
+  )
+);
 
 // --- UI Store (NOT persisted) ---
 interface UIState {

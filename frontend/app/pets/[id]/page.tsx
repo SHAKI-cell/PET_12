@@ -131,6 +131,7 @@ export default function PetDetailPage() {
               vaccinated={pet.vaccinated}
               spayed={pet.spayed}
               temperament={pet.temperament}
+              distance={pet.distance}
             />
 
             {/* Description Card */}

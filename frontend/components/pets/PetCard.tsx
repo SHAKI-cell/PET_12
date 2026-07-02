@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, MapPin } from "lucide-react";
+import { Heart, MapPin, ShieldCheck, Navigation, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import type { Pet } from "@/lib/pets-data";
 import { useFavoritesStore } from "@/lib/store";
@@ -64,10 +64,19 @@ export function PetCard({ pet }: PetCardProps) {
             {pet.gender === "male" ? "♂ Male" : "♀ Female"}
           </span>
         </div>
+        {/* Vaccinated Badge */}
+        {pet.vaccinated && (
+          <div className="absolute bottom-3 right-3">
+            <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-emerald/90 text-white px-2 py-1 rounded-full shadow-sm">
+              <ShieldCheck className="w-3 h-3" />
+              Vaccinated
+            </span>
+          </div>
+        )}
       </div>
 
       {/* Info */}
-      <Link href={`/pets/${pet.id}`} className="block p-5">
+      <div className="p-5">
         <div className="flex items-start justify-between">
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-1.5">
@@ -87,11 +96,20 @@ export function PetCard({ pet }: PetCardProps) {
           )}
         </div>
 
-        <div className="flex items-center gap-1 mt-2.5 text-slate-400">
-          <MapPin className="w-3.5 h-3.5 shrink-0" />
-          <span className="text-xs truncate">
-            {pet.location.city}, {pet.location.state}
-          </span>
+        {/* Location + Distance */}
+        <div className="flex items-center justify-between mt-2.5">
+          <div className="flex items-center gap-1 text-slate-400">
+            <MapPin className="w-3.5 h-3.5 shrink-0" />
+            <span className="text-xs truncate">
+              {pet.location.city}, {pet.location.state}
+            </span>
+          </div>
+          {pet.distance && (
+            <div className="flex items-center gap-1 text-slate-400 shrink-0">
+              <Navigation className="w-3 h-3" />
+              <span className="text-xs font-medium">{pet.distance}</span>
+            </div>
+          )}
         </div>
 
         {/* Temperament tags */}
@@ -105,7 +123,16 @@ export function PetCard({ pet }: PetCardProps) {
             </span>
           ))}
         </div>
-      </Link>
+
+        {/* View Details Button */}
+        <Link
+          href={`/pets/${pet.id}`}
+          className="mt-4 w-full inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-white bg-gradient-to-r from-coral to-emerald rounded-full py-2.5 shadow-sm hover:shadow-md hover:scale-[1.02] transition-all duration-300"
+        >
+          View Details
+          <ChevronRight className="w-4 h-4" />
+        </Link>
+      </div>
     </div>
   );
 }

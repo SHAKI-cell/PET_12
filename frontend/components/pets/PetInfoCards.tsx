@@ -1,4 +1,4 @@
-import { Dna, Calendar, Compass, ShieldAlert, Heart, Activity } from "lucide-react";
+import { Dna, Calendar, Compass, ShieldAlert, Heart, Activity, Navigation } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { VetCheckedTag } from "@/components/trust/VetCheckedTag";
 
@@ -10,6 +10,7 @@ interface PetInfoCardsProps {
   vaccinated: boolean;
   spayed: boolean;
   temperament: string[];
+  distance?: string;
 }
 
 export function PetInfoCards({
@@ -20,12 +21,14 @@ export function PetInfoCards({
   vaccinated,
   spayed,
   temperament,
+  distance,
 }: PetInfoCardsProps) {
   const cards = [
     { icon: Dna, title: "Breed", value: breed, bg: "bg-coral-light/40 text-coral" },
     { icon: Calendar, title: "Age", value: ageLabel, bg: "bg-emerald-light/40 text-emerald" },
     { icon: Compass, title: "Gender", value: gender.charAt(0).toUpperCase() + gender.slice(1), bg: "bg-amber-100 text-amber-700" },
     { icon: Activity, title: "Size", value: size.charAt(0).toUpperCase() + size.slice(1), bg: "bg-blue-50 text-blue-700" },
+    ...(distance ? [{ icon: Navigation, title: "Distance", value: distance, bg: "bg-purple-50 text-purple-700" }] : []),
   ];
 
   return (

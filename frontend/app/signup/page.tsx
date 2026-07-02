@@ -90,7 +90,7 @@ export default function SignupPage() {
               Join <span className="text-[#D4A843]">DoFo</span>
             </h1>
             <p className="text-slate-400 text-sm">
-              Create your premium account and find your perfect companion
+              Create your account and find your perfect companion
             </p>
           </div>
 

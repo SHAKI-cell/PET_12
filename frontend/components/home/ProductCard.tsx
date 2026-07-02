@@ -46,11 +46,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
               </h3>
               <p className="text-sm text-slate-500">{product.type}</p>
             </div>
-            <div className="flex items-center justify-between mt-2">
-              <span className="text-xl font-bold text-slate-900">
-                From Rs. {product.price.toFixed(2)}
+            <div className="flex items-center justify-between mt-2 gap-1.5">
+              <span className="text-base font-extrabold text-slate-900 shrink-0">
+                From Rs. {product.price.toFixed(0)}
               </span>
-              <span className="text-xs font-medium text-coral bg-coral-light px-3 py-1.5 rounded-full flex items-center gap-1">
+              <span className="text-[10px] font-semibold text-coral bg-coral-light px-2.5 py-1.5 rounded-full flex items-center gap-1 shrink-0">
                 <Eye className="w-3 h-3" /> Click to flip
               </span>
             </div>
