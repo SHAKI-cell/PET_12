@@ -12,11 +12,57 @@ export interface PetFilters {
   search?: string;
 }
 
+function getApprovedCustomListings(): Pet[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const stored = localStorage.getItem("dofo_approved_listings");
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    return parsed.map((c: any) => {
+      const months = c.ageUnit === "years" ? c.age * 12 : c.age;
+      const size = c.weight < 5 ? "small" : c.weight < 15 ? "medium" : "large";
+      return {
+        id: c.id,
+        name: c.name,
+        breed: c.breed,
+        species: c.species,
+        age: { months, label: `${c.age} ${c.ageUnit}` },
+        gender: c.gender,
+        size,
+        location: {
+          city: c.location.city,
+          state: c.location.state,
+          lat: c.location.lat || 19.076,
+          lng: c.location.lng || 72.8777,
+        },
+        images: c.photos && c.photos.length > 0 ? c.photos : [],
+        verified: true,
+        vaccinated: !!c.vaccinated,
+        spayed: !!c.spayed,
+        temperament: ["Friendly", "Playful"],
+        adoptionFee: Number(c.adoptionFee) || 0,
+        ownerId: "custom-owner",
+        ownerName: c.owner?.name || "Owner",
+        ownerAvatar: "",
+        ownerRating: 5.0,
+        ownerMemberSince: "New Member",
+        description: c.description || "",
+        healthNotes: c.healthNotes || "",
+        createdAt: c.submittedAt || new Date().toISOString(),
+      };
+    });
+  } catch (e) {
+    console.error("Failed to parse approved custom listings", e);
+    return [];
+  }
+}
+
 export async function getPets(filters?: PetFilters): Promise<Pet[]> {
   // Simulate network delay
   await new Promise((r) => setTimeout(r, 300));
 
-  let filtered = [...pets];
+  const customApproved = getApprovedCustomListings();
+  let filtered = [...customApproved, ...pets];
 
   if (filters) {
     if (filters.breed) {
@@ -63,13 +109,20 @@ export async function getPets(filters?: PetFilters): Promise<Pet[]> {
 
 export async function getPetById(id: string): Promise<Pet | undefined> {
   await new Promise((r) => setTimeout(r, 200));
-  return pets.find((p) => p.id === id);
+  const customApproved = getApprovedCustomListings();
+  const allPets = [...customApproved, ...pets];
+  return allPets.find((p) => p.id === id);
 }
 
 export function getAllBreeds(): string[] {
-  return Array.from(new Set(pets.map((p) => p.breed))).sort();
+  const customApproved = getApprovedCustomListings();
+  const allPets = [...customApproved, ...pets];
+  return Array.from(new Set(allPets.map((p) => p.breed))).sort();
 }
 
 export function getAllCities(): string[] {
-  return Array.from(new Set(pets.map((p) => p.location.city))).sort();
+  const customApproved = getApprovedCustomListings();
+  const allPets = [...customApproved, ...pets];
+  return Array.from(new Set(allPets.map((p) => p.location.city))).sort();
 }
+
