@@ -184,7 +184,14 @@ export async function POST(request: Request) {
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey || apiKey.includes("placeholder")) {
+    if (!apiKey || apiKey === "YOUR_GEMINI_API_KEY_HERE" || apiKey.includes("placeholder")) {
+      console.warn(
+        "\n======================================================\n" +
+        "🚨 DEVELOPER ALERT: GEMINI_API_KEY is missing or set to placeholder!\n" +
+        "Please get a new key from Google AI Studio and configure GEMINI_API_KEY in your .env.local file.\n" +
+        "Currently falling back to local simulation mode so the site continues working.\n" +
+        "======================================================\n"
+      );
       return handleLocalFallback(messages);
     }
 
